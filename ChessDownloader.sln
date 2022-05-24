@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessDownloader.NET", "ChessDownloader.NET\ChessDownloader.NET.csproj", "{EB48A9C7-B8D8-4454-AAB3-3BDA4A8DB36D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessDownloader.NET.CommandLine", "ChessDownloader.NET.CommandLine\ChessDownloader.NET.CommandLine.csproj", "{4916F037-22AD-4D72-B035-5FAA06536AC4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB48A9C7-B8D8-4454-AAB3-3BDA4A8DB36D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB48A9C7-B8D8-4454-AAB3-3BDA4A8DB36D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB48A9C7-B8D8-4454-AAB3-3BDA4A8DB36D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB48A9C7-B8D8-4454-AAB3-3BDA4A8DB36D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4916F037-22AD-4D72-B035-5FAA06536AC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4916F037-22AD-4D72-B035-5FAA06536AC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4916F037-22AD-4D72-B035-5FAA06536AC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4916F037-22AD-4D72-B035-5FAA06536AC4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {288E11BC-DCDD-45D8-83F1-923BE0B53253}
+	EndGlobalSection
+EndGlobal

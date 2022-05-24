@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ChessDownloader.NET.CommandLine": {
+      "commandName": "Project",
+      "commandLineArgs": "-u alanlviana -s chesscom -o public"
+    }
+  }
+}
