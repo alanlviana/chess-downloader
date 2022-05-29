@@ -15,7 +15,7 @@ Create a instance of one of these classes and use the method GetGamesByUsernameA
 using ChessDownloader.NET.ChessCom;
 using ChessDownloader.NET.Lichess;
 
-//IChessDownloader chessDownloader = new LichessDownloader();
+// IChessDownloader chessDownloader = new LichessDownloader();
 IChessDownloader chessDownloader = new ChessComDownloader();
 
 var games = await chessDownloader.GetGamesByUsernameAsync("alanlviana", GetHandlerProcessMessage());
