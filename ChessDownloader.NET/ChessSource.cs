@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ChessDownloader.NET.Models
+namespace ChessDownloader.NET
 {
     public class ChessSource
     {

@@ -1,4 +1,4 @@
-﻿namespace ChessDownloader.NET.Models
+﻿namespace ChessDownloader.NET
 {
     public class Game
     {

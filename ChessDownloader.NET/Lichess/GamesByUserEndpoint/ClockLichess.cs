@@ -1,4 +1,4 @@
-﻿namespace ChessDownloader.NET.Models.Lichess.GamesByUserEndpoint
+﻿namespace ChessDownloader.NET.Lichess.GamesByUserEndpoint
 {
     class ClockLichess
     {

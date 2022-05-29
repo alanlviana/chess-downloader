@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ChessDownloader.NET.Models.ChessCom.GamesListByArchiveEndpoint
+namespace ChessDownloader.NET.ChessCom.GamesListByArchiveEndpoint
 {
     public class PlayerChessCom
     {

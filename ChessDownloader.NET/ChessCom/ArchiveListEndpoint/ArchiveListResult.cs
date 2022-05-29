@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ChessDownloader.NET.Models.ChessCom.ArchiveListEndpoint
+namespace ChessDownloader.NET.ChessCom.ArchiveListEndpoint
 {
     public class ArchiveListResult
     {

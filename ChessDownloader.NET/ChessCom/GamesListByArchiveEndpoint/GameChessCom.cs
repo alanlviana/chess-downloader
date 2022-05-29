@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace ChessDownloader.NET.Models.ChessCom.GamesListByArchiveEndpoint
+namespace ChessDownloader.NET.ChessCom.GamesListByArchiveEndpoint
 {
     public class GameChessCom
     {

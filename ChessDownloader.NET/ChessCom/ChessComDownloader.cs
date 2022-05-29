@@ -1,5 +1,5 @@
-﻿using ChessDownloader.NET.Models.ChessCom.ArchiveListEndpoint;
-using ChessDownloader.NET.Models.ChessCom.GamesListByArchiveEndpoint;
+﻿using ChessDownloader.NET.ChessCom.ArchiveListEndpoint;
+using ChessDownloader.NET.ChessCom.GamesListByArchiveEndpoint;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -7,19 +7,24 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace ChessDownloader.NET.Models.ChessCom
+namespace ChessDownloader.NET.ChessCom
 {
-    public class ChessComScrapper : IChessScrapper
+    public class ChessComDownloader : IChessDownloader
     {
-        public async Task<IList<Game>> GetGamesByUsernameAsync(string username, IProgress<string> progressMessage)
+        private IProgress<ChessDownloaderProgress> ChessDownloaderProgress;
+        private decimal Total = 100;
+        private decimal Position = 0;
+
+        public async Task<IList<Game>> GetGamesByUsernameAsync(string username, IProgress<ChessDownloaderProgress> progressMessage)
         {
-            var archiveListJson = await GetArchiveListJson(username, progressMessage);
-            var archiveListResult = GetArchiveListFromJson(archiveListJson, progressMessage);
-            var games = await GetAllGamesFromArchiveList(archiveListResult, progressMessage);
+            ChessDownloaderProgress = progressMessage;
+            var archiveListJson = await GetArchiveListJson(username);
+            var archiveListResult = GetArchiveListFromJson(archiveListJson);
+            var games = await GetAllGamesFromArchiveList(archiveListResult);
             return games;
         }
 
-        private async Task<List<Game>> GetAllGamesFromArchiveList(ArchiveListResult archiveListResult, IProgress<string> progressMessage)
+        private async Task<IList<Game>> GetAllGamesFromArchiveList(ArchiveListResult archiveListResult)
         {
             var gameList = new List<Game>();
             var archiveCount = archiveListResult.Archives.Length;
@@ -28,13 +33,19 @@ namespace ChessDownloader.NET.Models.ChessCom
             {
                 var archive = archiveListResult.Archives[i];
                 var archiveGameList = await GetAllGamesFromArchiveList(archive);
+                Position = Math.Round((decimal)(i + 1) / (decimal)archiveCount * 100, 2);
                 gameList.AddRange(archiveGameList);
-                progressMessage?.Report($"[{i+1}/{archiveCount}] {gameList.Count} games downloaded!");
+                ReportProgress($"{gameList.Count} games downloaded!");
             }
             return gameList;
         }
 
-        private async Task<List<Game>> GetAllGamesFromArchiveList(string archive)
+        private void ReportProgress(string message)
+        {
+            ChessDownloaderProgress?.Report(new ChessDownloaderProgress(Position, Total, message));
+        }
+
+        private async Task<IList<Game>> GetAllGamesFromArchiveList(string archive)
         {
             var gamesListJson = await GetGameListJsonFromArchiveUrl(archive);
             var gamesListResult = GetGameListResultFromJson(gamesListJson);
@@ -42,7 +53,7 @@ namespace ChessDownloader.NET.Models.ChessCom
             return gamesList;
         }
 
-        private List<Game> GetAllFromGameListResult(GamesListResult gamesListResult)
+        private IList<Game> GetAllFromGameListResult(GamesListResult gamesListResult)
         {
             return gamesListResult.Games.Select(g => {
                 Game game = g;
@@ -64,14 +75,14 @@ namespace ChessDownloader.NET.Models.ChessCom
             return gameListString;
         }
 
-        private ArchiveListResult GetArchiveListFromJson(string archiveListJson, IProgress<string> progressMessage)
+        private ArchiveListResult GetArchiveListFromJson(string archiveListJson)
         {
             var archiveList = JsonConvert.DeserializeObject<ArchiveListResult>(archiveListJson);
-            progressMessage?.Report($"This user has {archiveList.Archives.Length} archives.");
+            ReportProgress($"This user has {archiveList.Archives.Length} archives.");
             return archiveList;
         }
 
-        private async Task<string> GetArchiveListJson(string username, IProgress<string> progressMessage)
+        private async Task<string> GetArchiveListJson(string username)
         {
             string lichess_url = $"https://api.chess.com/pub/player/{username}/games/archives";
             HttpClient client = new HttpClient();
@@ -82,7 +93,7 @@ namespace ChessDownloader.NET.Models.ChessCom
             }
             response.EnsureSuccessStatusCode();
             var archiveListString = await response.Content.ReadAsStringAsync();
-            progressMessage?.Report($"Archive list downloaded.");
+            ReportProgress($"Archive list downloaded.");
             return archiveListString;
         }
     }

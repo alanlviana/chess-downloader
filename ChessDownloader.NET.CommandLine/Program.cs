@@ -20,8 +20,7 @@ namespace ChessDownloader.NET.CommandLine
             try
             {
                 var chessDownloader = new ChessDownloaderConsole();
-                await chessDownloader.DownloadAllGames(options.Source, options.Username, options.Output);
-                return 0;
+                return await chessDownloader.DownloadAllGames(options.Source, options.Username, options.Output);
             }catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);

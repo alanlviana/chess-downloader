@@ -1,4 +1,4 @@
-﻿namespace ChessDownloader.NET.Models.Lichess
+﻿namespace ChessDownloader.NET.Lichess
 {
     class PlayerLichess
     {

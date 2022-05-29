@@ -1,7 +1,6 @@
-﻿using ChessDownloader.NET.Models.ChessCom;
-using ChessDownloader.NET.Models.Lichess;
-using ChessDownloader.NET.Models.Pgn;
-using ChessDownloader.NET.Models;
+﻿using ChessDownloader.NET.ChessCom;
+using ChessDownloader.NET.Lichess;
+using ChessDownloader.NET.Pgn;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,32 +10,38 @@ namespace ChessDownloader.NET.CommandLine
 {
     class ChessDownloaderConsole
     {
+        private const int EXIT_CODE_SUCCESS = 0;
+
         public async Task<int> DownloadAllGames(string source, string username, string output)
         {
-            IChessScrapper chessScrapper = getScrapperBySourceName(source);
+            IChessDownloader chessDownloader = getDownloaderBySourceName(source);
 
-            var games = await chessScrapper.GetGamesByUsernameAsync(username, GetHandlerProcessMessage());
+            var games = await chessDownloader.GetGamesByUsernameAsync(username, GetHandlerProcessMessage());
 
-            SaveAllGames(output, games);
+            await SaveAllGames(output, games);
 
-            return 0;
+            return EXIT_CODE_SUCCESS;
         }
 
-        private void SaveAllGames(string output, IList<Game> games)
+        private Task SaveAllGames(string output, IList<Game> games)
         {
             var currentDirectory = Directory.GetCurrentDirectory();
             var finalPathOutput = Path.Combine(currentDirectory, output);
 
-            foreach (var game in games)
+            Parallel.ForEach(games, (game) =>
             {
                 var pgn = new PgnParser(game.Pgn).Parse();
-                SavePGN(finalPathOutput, game, pgn);
-            }
+                SavePgn(finalPathOutput, game, pgn);
+            });
+
+
             Console.WriteLine($"{games.Count} games were saved at:");
             Console.WriteLine(finalPathOutput);
+
+            return Task.CompletedTask;
         }
 
-        private void SavePGN(string output, Game game, Pgn pgn)
+        private void SavePgn(string output, Game game, PgnGame pgn)
         {
 
             var white = pgn.White;
@@ -51,28 +56,35 @@ namespace ChessDownloader.NET.CommandLine
             File.WriteAllText(filePath, game.Pgn);
         }
 
-        private static Progress<string> GetHandlerProcessMessage()
+        private Progress<ChessDownloaderProgress> GetHandlerProcessMessage()
         {
-            return new Progress<string>(progressValue => Console.WriteLine(progressValue));
+            return new Progress<ChessDownloaderProgress>(progressValue => {
+                if (progressValue.Undefined)
+                {
+                    Console.WriteLine($"{progressValue.ProgressMessage}");
+                } else {
+                    Console.WriteLine($"{progressValue.Position}/{progressValue.Total}% - {progressValue.ProgressMessage}");
+                }
+            });
         }
 
-        private static IChessScrapper getScrapperBySourceName(string source)
+        private static IChessDownloader getDownloaderBySourceName(string source)
         {
-            IChessScrapper chessScrapper;
+            IChessDownloader downloader;
             switch (source)
             {
                 case "chesscom":
-                    chessScrapper = new ChessComScrapper();
+                    downloader = new ChessComDownloader();
                     break;
                 case "lichess":
-                    chessScrapper = new LichessScrapper();
+                    downloader = new LichessDownloader();
                     break;
 
                 default:
-                    throw new Exception($"scrapper {source} not found");
+                    throw new ArgumentException($"downloader {source} not found");
             }
 
-            return chessScrapper;
+            return downloader;
         }
     }
 }

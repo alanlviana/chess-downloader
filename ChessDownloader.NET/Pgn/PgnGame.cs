@@ -1,6 +1,6 @@
-﻿namespace ChessDownloader.NET.Models.Pgn
+﻿namespace ChessDownloader.NET.Pgn
 {
-    public class Pgn
+    public class PgnGame
     {
         public string Event { get; set; }
         public string Site { get; set; }

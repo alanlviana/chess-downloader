@@ -1,4 +1,4 @@
-﻿namespace ChessDownloader.NET.Models.Pgn
+﻿namespace ChessDownloader.NET.Pgn
 {
     public class PgnParser
     {
@@ -28,9 +28,9 @@
             PgnLines = pgnRaw.Split("\n");
         }
 
-        public Pgn Parse()
+        public PgnGame Parse()
         {
-            var pgn = new Pgn();
+            var pgn = new PgnGame();
             foreach (var line in PgnLines)
             {
                 if (HasKey(EVENT_KEY, line))
