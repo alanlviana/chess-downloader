@@ -20,4 +20,4 @@ jobs:
         run: dotnet pack ChessDownloader.NET\\ChessDownloader.NET.csproj -c Release
 
       - name: Publish to GitHub packages 
-        run: dotnet nuget push /home/runner/work/ChessDownloader.NET/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate`
+        run: dotnet nuget push /home/runner/work/ChessDownloader.NET/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
