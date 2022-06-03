@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <PackageId>ChessDownloader.NET</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Authors>alanlviana</Authors>
     <Company>Alan</Company>
     <PackageTags>NuGet;Classlib;GitHub;Actions</PackageTags>
@@ -14,10 +14,15 @@
     <PackageProjectUrl>https://github.com/alanlviana/chess-downloader/</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/alanlviana/chess-downloader/</RepositoryUrl>
+    <PackageIcon>package_icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\resources\package_icon.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

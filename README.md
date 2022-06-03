@@ -1,4 +1,4 @@
-# chess-downloader
+# ChessDownloader.net
 
 ChessDownloader.NET is a library that lets you download games from Chess.com and Lichess.org. You can download games by username.
 
