@@ -3,14 +3,25 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <PackageId>ChessDownloader.NET</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>alanlviana</Authors>
     <Company>Alan</Company>
     <PackageTags>NuGet;Classlib;GitHub;Actions</PackageTags>
     <Description>
       ChessDownloader.NET is a library that lets you download games from Chess.com and Lichess.org.
     </Description>
+    <Title>ChessDownloader.NET</Title>
+    <PackageProjectUrl>https://github.com/alanlviana/chess-downloader/</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/alanlviana/chess-downloader/</RepositoryUrl>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
